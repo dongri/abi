@@ -8,6 +8,7 @@ function App() {
   const [inputValues, setInputValues] = useState({});
   const [functions, setFunctions] = useState([]);
   const [results, setResults] = useState({});
+  const [errors, setErrors] = useState({});
 
   const handleInputABIChange = (e) => {
     try {
@@ -53,12 +54,13 @@ function App() {
         result = await contract[func.name](...Object.values(funcInputs));
         console.log(`Transaction Hash: ${result.hash}`);
       }
-      setResults(prevResults => ({
-        ...prevResults,
-        [func.name]: result.toString()
-      }));
+      setResults({
+        [func.name]: JSON.stringify(result)
+      });
     } catch (error) {
-      console.error(error);
+      setErrors({
+        [func.name]: error.message
+      });
     }
   };
 
@@ -66,8 +68,8 @@ function App() {
     <div className="App">
       <h1>ABI</h1>
       <p>Execute a smart contract from ABI</p>
-      <div class="container">
-        <div class="abi-input">
+      <div className="container">
+        <div className="abi-input">
           <input
             id="contractAddress"
             type="text"
@@ -84,7 +86,7 @@ function App() {
           >
           </textarea>
         </div>
-        <div class="function-forms" id="functionForms">
+        <div className="function-forms" id="functionForms">
           {functions.map(func => (
             <div
               key={func.name}
@@ -111,6 +113,7 @@ function App() {
                 <button type="submit" className="executeButton">Execute</button>
               </form>
               {results[func.name] && <div className="result">{results[func.name]}</div>}
+              {errors[func.name] && <div className="error">{errors[func.name]}</div>}
             </div>
           ))}
         </div>

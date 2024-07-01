@@ -112,7 +112,14 @@
   margin-top: 5px;
   width: 100%;
   padding: 10px;
-  box-sizing: border-box;
-  background-color: #FAFBFC;
-  border-radius: 4px;
+  color: green;
+  line-break: anywhere;
+}
+
+.error {
+  margin-top: 5px;
+  width: 100%;
+  padding: 10px;
+  color: red;
+  line-break: anywhere;
 }
