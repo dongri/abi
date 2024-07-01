@@ -54,13 +54,15 @@ function App() {
         result = await contract[func.name](...Object.values(funcInputs));
         console.log(`Transaction Hash: ${result.hash}`);
       }
-      setResults({
+      setResults(prevResults => ({
+        ...prevResults,
         [func.name]: JSON.stringify(result)
-      });
+      }));
     } catch (error) {
-      setErrors({
+      setErrors(prevErrors => ({
+        ...prevErrors,
         [func.name]: error.message
-      });
+      }));
     }
   };
 
